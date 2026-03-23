@@ -1,0 +1,66 @@
+﻿src/ai/flows/register-tree.ts(149,43): error TS2339: Property 'consensusTimestamp' does not exist on type 'TransactionReceipt'.
+src/ai/flows/submit-validation.ts(132,29): error TS2339: Property 'consensusTimestamp' does not exist on type 'TransactionReceipt'.
+src/app/agent/page.tsx(6,36): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/app/balance/page.tsx(12,79): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/app/chat/page.tsx(10,246): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/app/login/page.tsx(13,38): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/app/page.tsx(10,115): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/app/plant/page.tsx(37,57): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/app/pools/page.tsx(15,38): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/app/tokenomics/page.tsx(20,8): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/app/umoja/page.tsx(9,76): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/app/validate/page.tsx(16,121): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/app-sidebar.tsx(30,8): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/connect-wallet-button.tsx(11,38): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/recent-activity.tsx(13,28): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/registry/tree-details.tsx(6,58): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/registry/tree-registry.tsx(29,18): error TS2304: Cannot find name 'db'.
+src/components/ui/accordion.tsx(5,29): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/ui/calendar.tsx(4,43): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/ui/carousel.tsx(7,39): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/ui/checkbox.tsx(5,23): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/ui/dialog.tsx(6,19): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/ui/dropdown-menu.tsx(5,45): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/ui/menubar.tsx(5,45): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/ui/radio-group.tsx(5,24): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/ui/select.tsx(5,47): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/ui/sheet.tsx(6,19): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/ui/sidebar.tsx(6,27): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/ui/toast.tsx(6,19): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/umoja/swap-pools.tsx(21,46): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/umoja/ucse-marketplace.tsx(19,8): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/umoja/umoja-activity.tsx(14,50): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/components/umoja/umoja-stats.tsx(15,8): error TS7016: Could not find a declaration file for module 'lucide-react'. 'C:/Users/Austin NAMUYE/OneDrive/Desktop/HPC/hisa-Dapp/node_modules/lucide-react/dist/esm/lucide-react.js' implicitly has an 'any' type.
+  Try `npm i --save-dev @types/lucide-react` if it exists or add a new declaration (.d.ts) file containing `declare module 'lucide-react';`
+src/context/wallet-provider.tsx(37,41): error TS2339: Property 'getPairingData' does not exist on type 'HashConnect'.
+src/context/wallet-provider.tsx(76,23): error TS2339: Property 'ethereum' does not exist on type 'Window & typeof globalThis'.
+src/context/wallet-provider.tsx(78,39): error TS2339: Property 'ethereum' does not exist on type 'Window & typeof globalThis'.

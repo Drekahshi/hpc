@@ -1,0 +1,70 @@
+{
+  "placeholderImages": [
+    {
+      "id": "tree-1",
+      "description": "A vibrant, healthy green tree with a full canopy under a clear blue sky.",
+      "imageUrl": "https://images.unsplash.com/photo-1720676646432-a952436580ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8aGVhbHRoeSUyMHRyZWV8ZW58MHx8fHwxNzU5NTcyOTIxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "healthy tree"
+    },
+    {
+      "id": "tree-2",
+      "description": "A close-up shot of tree leaves showing signs of a potential nutrient deficiency, with some yellowing visible.",
+      "imageUrl": "https://images.unsplash.com/photo-1577944262558-8ad01ae6cf09?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxzaWNrJTIwdHJlZXxlbnwwfHx8fDE3NTk1NzI5MjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "sick tree"
+    },
+    {
+      "id": "tree-3",
+      "description": "A majestic old tree standing tall in a lush forest, representing longevity and strength.",
+      "imageUrl": "https://images.unsplash.com/photo-1569526189905-69f5a6d8dc72?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxvbGQlMjB0cmVlfGVufDB8fHx8MTc1OTQ3OTc1NHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "old tree"
+    },
+    {
+      "id": "user-1",
+      "description": "Profile photo of a user.",
+      "imageUrl": "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwcm9maWxlJTIwcGhvdG98ZW58MHx8fHwxNzU5NDkxMzk0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "profile photo"
+    },
+    {
+      "id": "user-2",
+      "description": "Profile photo of another user.",
+      "imageUrl": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwcm9maWxlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzU5NTA1MjY3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "profile portrait"
+    },
+    {
+      "id": "user-3",
+      "description": "Profile photo of a third user.",
+      "imageUrl": "https://images.unsplash.com/photo-1580489944761-15a19d654956?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwZXJzb24lMjBzbWlsaW5nfGVufDB8fHx8MTc1OTU0MTgzMnww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person smiling"
+    },
+    {
+      "id": "user-4",
+      "description": "Profile photo of a fourth user.",
+      "imageUrl": "https://images.unsplash.com/photo-1579463148228-138296ac3b98?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx3b21hbiUyMGZhY2V8ZW58MHx8fHwxNzU5NTU5OTg5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "woman face"
+    },
+    {
+      "id": "tree-acacia",
+      "description": "An acacia tree.",
+      "imageUrl": "https://images.unsplash.com/photo-1667254650752-34cdd1106dc9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhY2FjaWElMjB0cmVlfGVufDB8fHx8MTc1OTU3MjkyMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "acacia tree"
+    },
+    {
+      "id": "tree-oak",
+      "description": "An oak tree.",
+      "imageUrl": "https://images.unsplash.com/photo-1592122777233-a09a00308277?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxvYWslMjB0cmVlfGVufDB8fHx8MTc1OTU3MjkyMXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "oak tree"
+    },
+    {
+      "id": "tree-medicinal",
+      "description": "A medicinal plant.",
+      "imageUrl": "https://images.unsplash.com/photo-1650504688855-70c19c39caf6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxtZWRpY2luYWwlMjBwbGFudHxlbnwwfHx8fDE3NTk1NzI5MjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "medicinal plant"
+    },
+    {
+      "id": "tree-bamboo",
+      "description": "A bamboo grove.",
+      "imageUrl": "https://images.unsplash.com/photo-1500215238115-1322078d92a3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxiYW1ib28lMjBmb3Jlc3R8ZW58MHx8fHwxNzU5NTMzMDU0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "bamboo forest"
+    }
+  ]
+}

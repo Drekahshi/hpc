@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 60 56% 91%;
+    --foreground: 25 70% 10%;
+    --card: 60 56% 95%;
+    --card-foreground: 25 70% 10%;
+    --popover: 60 56% 95%;
+    --popover-foreground: 25 70% 10%;
+    --primary: 141 29% 34%;
+    --primary-foreground: 141 29% 98%;
+    --secondary: 141 20% 60%;
+    --secondary-foreground: 25 70% 10%;
+    --muted: 141 10% 80%;
+    --muted-foreground: 25 70% 25%;
+    --accent: 25 70% 31%;
+    --accent-foreground: 25 70% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 141 10% 70%;
+    --input: 141 10% 85%;
+    --ring: 141 29% 34%;
+    --chart-1: 141 29% 34%;
+    --chart-2: 25 70% 31%;
+    --chart-3: 141 20% 60%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    
+    --sidebar-background: 141 20% 25%;
+    --sidebar-foreground: 141 10% 95%;
+    --sidebar-primary: 60 56% 91%;
+    --sidebar-primary-foreground: 141 29% 34%;
+    --sidebar-accent: 141 29% 34%;
+    --sidebar-accent-foreground: 141 10% 95%;
+    --sidebar-border: 141 10% 35%;
+    --sidebar-ring: 60 56% 91%;
+  }
+
+  .theme-umoja:root {
+    --primary: 34 93% 54%; /* Bitcoin Orange */
+    --primary-foreground: 34 93% 98%;
+    --secondary: 34 80% 65%;
+    --accent: 34 93% 54%;
+    --ring: 34 93% 54%;
+    --chart-1: 34 93% 54%;
+    --chart-2: 25 70% 31%;
+    --sidebar-background: 34 80% 25%;
+    --sidebar-primary: 34 93% 91%;
+    --sidebar-primary-foreground: 34 93% 34%;
+    --sidebar-accent: 34 93% 54%;
+    --sidebar-ring: 34 93% 91%;
+  }
+
+  .theme-culture:root {
+    --primary: 262 80% 58%; /* Purple */
+    --primary-foreground: 262 80% 98%;
+    --secondary: 262 70% 68%;
+    --accent: 262 80% 58%;
+    --ring: 262 80% 58%;
+    --chart-1: 262 80% 58%;
+    --chart-2: 25 70% 31%;
+    --sidebar-background: 262 70% 28%;
+    --sidebar-primary: 262 80% 91%;
+    --sidebar-primary-foreground: 262 80% 34%;
+    --sidebar-accent: 262 80% 58%;
+    --sidebar-ring: 262 80% 91%;
+  }
+
+  .dark {
+    --background: 141 10% 10%;
+    --foreground: 60 56% 91%;
+    --card: 141 10% 12%;
+    --card-foreground: 60 56% 91%;
+    --popover: 141 10% 12%;
+    --popover-foreground: 60 56% 91%;
+    --muted: 141 10% 20%;
+    --muted-foreground: 60 56% 70%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 141 10% 25%;
+    --input: 141 10% 25%;
+  }
+
+  .dark.theme-jani {
+    --primary: 141 29% 45%;
+    --primary-foreground: 141 29% 98%;
+    --secondary: 141 10% 25%;
+    --secondary-foreground: 141 29% 98%;
+    --accent: 25 70% 45%;
+    --accent-foreground: 25 70% 98%;
+    --ring: 141 29% 45%;
+
+    --sidebar-background: 141 10% 12%;
+    --sidebar-foreground: 60 56% 91%;
+    --sidebar-primary: 141 29% 45%;
+    --sidebar-primary-foreground: 141 29% 98%;
+    --sidebar-accent: 141 10% 25%;
+    --sidebar-accent-foreground: 60 56% 91%;
+    --sidebar-border: 141 10% 25%;
+    --sidebar-ring: 141 29% 45%;
+  }
+
+  .dark.theme-umoja:root {
+    --primary: 34 93% 54%;
+    --primary-foreground: 34 93% 98%;
+    --secondary: 34 80% 30%;
+    --accent: 34 93% 54%;
+    --ring: 34 93% 54%;
+
+    --sidebar-background: 34 80% 12%;
+    --sidebar-primary: 34 93% 54%;
+    --sidebar-accent: 34 80% 25%;
+    --sidebar-ring: 34 93% 54%;
+  }
+  
+  .dark.theme-culture:root {
+    --primary: 262 80% 58%;
+    --primary-foreground: 262 80% 98%;
+    --secondary: 262 70% 38%;
+    --accent: 262 80% 58%;
+    --ring: 262 80% 58%;
+    
+    --sidebar-background: 262 70% 12%;
+    --sidebar-primary: 262 80% 58%;
+    --sidebar-accent: 262 70% 28%;
+    --sidebar-ring: 262 80% 58%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

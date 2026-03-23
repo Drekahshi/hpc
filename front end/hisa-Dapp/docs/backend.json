@@ -1,0 +1,440 @@
+{
+  "entities": {
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user in the Veridi system, storing core profile information and roles.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user (auto-generated)."
+        },
+        "email": {
+          "type": "string",
+          "description": "User's email address.",
+          "format": "email"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "User's phone number, compatible with USSD."
+        },
+        "hederaAccountId": {
+          "type": "string",
+          "description": "User's Hedera account ID for transactions and rewards."
+        },
+        "role": {
+          "type": "string",
+          "description": "User's role in the system.",
+          "enum": ["admin", "validator", "cfa_member", "donor"]
+        },
+        "cfaId": {
+          "type": "string",
+          "description": "Reference to the CFA entity the user belongs to. (Relationship: CFA 1:N User)"
+        },
+        "profile": {
+          "type": "object",
+          "properties": {
+            "displayName": { "type": "string" },
+            "photoURL": { "type": "string", "description": "IPFS hash or URL to profile photo." },
+            "location": {
+              "type": "object",
+              "properties": {
+                "county": { "type": "string" },
+                "region": { "type": "string" }
+              }
+            }
+          }
+        },
+        "reputation": {
+          "type": "object",
+          "properties": {
+            "score": { "type": "number" },
+            "validationsCompleted": { "type": "number" },
+            "treesPlanted": { "type": "number" },
+            "disputes": { "type": "number" }
+          }
+        },
+        "wallet": {
+          "type": "object",
+          "properties": {
+            "janiBalance": { "type": "number" },
+            "stakedAmount": { "type": "number" },
+            "carbonCredits": { "type": "number" }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastActive": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "email", "role"]
+    },
+    "CFA": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CFA",
+      "type": "object",
+      "description": "Represents a Community Forest Association (CFA).",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the CFA (auto-generated)."
+        },
+        "name": { "type": "string" },
+        "registrationNumber": { "type": "string" },
+        "location": {
+          "type": "object",
+          "properties": {
+            "county": { "type": "string" },
+            "coordinates": {
+              "type": "object",
+              "properties": {
+                "lat": { "type": "number" },
+                "lng": { "type": "number" }
+              }
+            },
+            "conservationArea": { "type": "string", "description": "GeoJSON polygon string." }
+          }
+        },
+        "leadership": {
+          "type": "object",
+          "properties": {
+            "chairman": { "type": "string", "description": "User ID reference." },
+            "secretary": { "type": "string", "description": "User ID reference." },
+            "treasurer": { "type": "string", "description": "User ID reference." }
+          }
+        },
+        "members": { "type": "array", "items": { "type": "string" } },
+        "stats": {
+          "type": "object",
+          "properties": {
+            "totalMembers": { "type": "number" },
+            "treesPlanted": { "type": "number" },
+            "carbonOffset": { "type": "number" },
+            "activeProjects": { "type": "number" }
+          }
+        },
+        "verified": { "type": "boolean" },
+        "verificationDate": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name"]
+    },
+    "Tree": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Tree",
+      "type": "object",
+      "description": "Represents a single tree planted and tracked in the system.",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the tree." },
+        "hederaTopicId": { "type": "string" },
+        "species": {
+          "type": "object",
+          "properties": {
+            "commonName": { "type": "string" },
+            "scientificName": { "type": "string" },
+            "type": { "type": "string", "enum": ["indigenous", "exotic", "medicinal"] }
+          }
+        },
+        "planting": {
+          "type": "object",
+          "properties": {
+            "plantedBy": { "type": "string", "description": "User ID reference." },
+            "cfaId": { "type": "string", "description": "CFA ID reference." },
+            "date": { "type": "string", "format": "date-time" },
+            "location": {
+              "type": "object",
+              "properties": {
+                "lat": { "type": "number" },
+                "lng": { "type": "number" },
+                "altitude": { "type": "number" }
+              }
+            },
+            "nurserySource": { "type": "string", "description": "Nursery ID reference." }
+          }
+        },
+        "validation": {
+          "type": "object",
+          "properties": {
+            "status": { "type": "string", "enum": ["pending", "verified", "disputed", "dead"] },
+            "validators": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "userId": { "type": "string" },
+                  "validationType": { "type": "string", "enum": ["tree_planter", "ai", "community"] },
+                  "timestamp": { "type": "string", "format": "date-time" },
+                  "confidence": { "type": "number" },
+                  "signature": { "type": "string" }
+                }
+              }
+            },
+            "lastVerified": { "type": "string", "format": "date-time" },
+            "nextCheckDue": { "type": "string", "format": "date-time" }
+          }
+        },
+        "growth": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": { "type": "string", "format": "date-time" },
+              "height": { "type": "number" },
+              "healthScore": { "type": "number" },
+              "photoHash": { "type": "string" },
+              "notes": { "type": "string" },
+              "validatedBy": { "type": "string", "description": "User ID reference." }
+            }
+          }
+        },
+        "iotData": {
+          "type": "object",
+          "properties": {
+            "soilMoisture": { "type": "number" },
+            "temperature": { "type": "number" },
+            "co2Absorption": { "type": "number" },
+            "lastSync": { "type": "string", "format": "date-time" }
+          }
+        },
+        "nftMinted": { "type": "boolean" },
+        "nftId": { "type": "string" },
+        "status": { "type": "string", "enum": ["growing", "mature", "dead", "removed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Verification": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Verification",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "treeId": { "type": "string" },
+        "validatorId": { "type": "string" },
+        "type": { "type": "string", "enum": ["planting", "growth_check", "survival", "dispute"] },
+        "data": { "type": "object" },
+        "hederaHash": { "type": "string" },
+        "aiValidation": { "type": "object" },
+        "status": { "type": "string", "enum": ["pending", "approved", "disputed", "rejected"] },
+        "rewardsIssued": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Reward": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Reward",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "type": { "type": "string", "enum": ["tree_planting", "validation", "staking", "governance"] },
+        "amount": { "type": "number" },
+        "treeId": { "type": "string" },
+        "transactionHash": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "completed", "failed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "StakingPool": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "StakingPool",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "totalStaked": { "type": "number" },
+        "apy": { "type": "number" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Project": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Project",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "cfaId": { "type": "string" },
+        "description": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "NFT": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "NFT",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string" },
+        "projectId": { "type": "string" },
+        "hederaNFTId": { "type": "string" },
+        "ownedBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Donation": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Donation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "donorId": { "type": "string" },
+        "amount": { "type": "number" },
+        "projectId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Governance": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Governance",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Analytics": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Analytics",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "ecosystem": { "type": "object" }
+      }
+    },
+    "Notification": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Notification",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "read": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "SystemConfig": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "SystemConfig",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "tokenomics": { "type": "object" },
+        "lastUpdated": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "auth": {
+    "providers": [
+      "email/password",
+      "phone",
+      "anonymous"
+    ],
+    "customClaims": {
+      "role": ["admin", "validator", "cfa_member", "donor"],
+      "cfaId": "string",
+      "validatorTier": "number",
+      "reputationScore": "number"
+    }
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "schema": { "$ref": "#/entities/User" },
+          "description": "Stores user profile information."
+        }
+      },
+      {
+        "path": "/cfas/{cfaId}",
+        "definition": {
+          "schema": { "$ref": "#/entities/CFA" },
+          "description": "Stores Community Forest Association (CFA) information."
+        }
+      },
+      {
+        "path": "/trees/{treeId}",
+        "definition": {
+          "schema": { "$ref": "#/entities/Tree" },
+          "description": "Stores individual tree data."
+        }
+      },
+      {
+        "path": "/verifications/{verificationId}",
+        "definition": {
+          "schema": { "$ref": "#/entities/Verification" },
+          "description": "Stores verification records for trees."
+        }
+      },
+      {
+        "path": "/rewards/{rewardId}",
+        "definition": {
+          "schema": { "$ref": "#/entities/Reward" },
+          "description": "Stores reward transaction data."
+        }
+      },
+      {
+        "path": "/stakingPools/{poolId}",
+        "definition": {
+          "schema": { "$ref": "#/entities/StakingPool" },
+          "description": "Stores data about staking pools."
+        }
+      },
+      {
+        "path": "/projects/{projectId}",
+        "definition": {
+          "schema": { "$ref": "#/entities/Project" },
+          "description": "Stores conservation project information."
+        }
+      },
+      {
+        "path": "/nfts/{nftId}",
+        "definition": {
+          "schema": { "$ref": "#/entities/NFT" },
+          "description": "Stores data about minted NFTs."
+        }
+      },
+      {
+        "path": "/donations/{donationId}",
+        "definition": {
+          "schema": { "$ref": "#/entities/Donation" },
+          "description": "Stores donation records."
+        }
+      },
+      {
+        "path": "/governance/{proposalId}",
+        "definition": {
+          "schema": { "$ref": "#/entities/Governance" },
+          "description": "Stores governance proposals and votes."
+        }
+      },
+      {
+        "path": "/analytics/{analyticsId}",
+        "definition": {
+          "schema": { "$ref": "#/entities/Analytics" },
+          "description": "Stores daily analytics snapshots."
+        }
+      },
+      {
+        "path": "/users/{userId}/notifications/{notificationId}",
+        "definition": {
+          "schema": { "$ref": "#/entities/Notification" },
+          "description": "Subcollection for user-specific notifications."
+        }
+      },
+      {
+        "path": "/systemConfig/singleton",
+        "definition": {
+          "schema": { "$ref": "#/entities/SystemConfig" },
+          "description": "Singleton document for system-wide configuration."
+        }
+      }
+    ]
+  }
+}

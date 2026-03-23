@@ -1,0 +1,414 @@
+/**
+ * @fileoverview Firestore Security Rules for the Veridi application.
+ *
+ * Core Philosophy:
+ * This ruleset prioritizes secure authorization based on user roles,
+ * relationships between entities (e.g., CFA membership), and reputation scores.
+ * It avoids complex data validation to enable rapid prototyping and development.
+ *
+ * Data Structure:
+ * The Firestore database consists of top-level collections for users, CFAs, trees,
+ * verifications, rewards, staking pools, projects, NFTs, donations, governance proposals,
+ * and analytics. User-specific notifications are stored in a subcollection under each user.
+ * A singleton document holds system-wide configuration.
+ *
+ * Key Security Decisions:
+ * - User data is protected with owner-only access for updates and creates, except admin.
+ * - CFAs can be created by users with sufficient reputation.
+ * - Tree creation requires either CFA membership or validator status.
+ * - Rewards are created and updated only by the system.
+ * - Some data is public-read (e.g., Trees, Projects, NFTs, Analytics).
+ * - Data validation is minimal, focusing on authorization and relational integrity.
+ *
+ * Denormalization for Authorization:
+ * To avoid costly `get()` calls in the rules, key authorization data is often
+ * denormalized directly into documents. For example, the `trees` collection
+ * stores the `cfaId` and `plantedBy` within each tree document to avoid needing
+ * to query the CFA or user documents during write operations.
+ *
+ * Structural Segregation:
+ * User-specific notifications are stored in a private subcollection under each user,
+ * ensuring that only the user (or an admin) can access them. This is preferred over
+ * storing all notifications in a single collection with a `userId` field and filtering
+ * in the rules.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --------------------------------------------------------------------------
+    // Helper Functions
+    // --------------------------------------------------------------------------
+
+    /**
+     * @description Checks if the user is signed in.
+     * @return {bool} True if the user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * @description Checks if the authenticated user's ID matches the provided user ID.
+     * @param {string} userId The user ID to compare against.
+     * @return {bool} True if the user is the owner.
+     */
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    /**
+     * @description Checks if the authenticated user is an administrator.
+     * @return {bool} True if the user has the 'admin' role.
+     */
+    function isAdmin() {
+      return isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    /**
+     * @description Checks if the authenticated user is a validator.
+     * @return {bool} True if the user has the 'validator' or 'admin' role.
+     */
+    function isValidator() {
+      return isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['validator', 'admin'];
+    }
+
+    /**
+     * @description Checks if the authenticated user is a member of the specified CFA.
+     * @param {string} cfaId The CFA ID to check membership against.
+     * @return {bool} True if the user is a member of the CFA.
+     */
+    function isCFAMember(cfaId) {
+      return isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.cfaId == cfaId;
+    }
+
+    /**
+     * @description Checks if the authenticated user has a reputation score greater than or equal to the specified minimum score.
+     * @param {number} minScore The minimum reputation score required.
+     * @return {bool} True if the user's reputation score meets the minimum requirement.
+     */
+    function hasReputation(minScore) {
+      return isSignedIn() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.reputation.score >= minScore;
+    }
+
+    /**
+     * @description Checks if the user is the owner and the document exists.
+     * @param {string} userId The user ID to check.
+     * @return {bool} True if the user is the owner and the document exists.
+     */
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+
+    // --------------------------------------------------------------------------
+    // Users Collection
+    // --------------------------------------------------------------------------
+
+    /**
+     * @description Manages access to user profile documents.
+     * @path /users/{userId}
+     * @allow (read) Signed-in user can read any user profile.
+     * @allow (create) Signed-in user can create their own user profile.
+     * @allow (update) Signed-in user can update their own user profile, or admin can update any user profile.
+     * @allow (delete) Admin can delete any user profile.
+     * @deny (read) An anonymous user cannot read any user profile.
+     * @deny (create) A signed-in user cannot create a user profile for another user.
+     * @deny (update) A signed-in user cannot update another user's profile (unless admin).
+     * @deny (delete) A signed-in user cannot delete another user's profile (unless admin).
+     * @principle Enforces user-ownership for profile management and admin override.
+     */
+    match /users/{userId} {
+      allow get: if isSignedIn();
+      allow list: if false; // Explicitly disallow listing
+      allow create: if isOwner(userId);
+      allow update: if isOwner(userId) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------------
+    // CFAs Collection
+    // --------------------------------------------------------------------------
+
+    /**
+     * @description Manages access to Community Forest Association (CFA) documents.
+     * @path /cfas/{cfaId}
+     * @allow (read) Signed-in user can read any CFA document.
+     * @allow (create) Signed-in user with sufficient reputation (50) can create a CFA.
+     * @allow (update) CFA member or admin can update a CFA document.
+     * @allow (delete) Admin can delete any CFA document.
+     * @deny (read) Anonymous user cannot read CFA documents.
+     * @deny (create) Signed-in user without sufficient reputation cannot create a CFA.
+     * @deny (update) User who is not a CFA member or admin cannot update a CFA document.
+     * @deny (delete) User who is not an admin cannot delete a CFA document.
+     * @principle Restricts CFA creation based on reputation, and CFA modifications to members or admins.
+     */
+    match /cfas/{cfaId} {
+      allow get: if isSignedIn();
+      allow list: if false; // Explicitly disallow listing
+      allow create: if isSignedIn() && hasReputation(50);
+      allow update: if isCFAMember(cfaId) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------------
+    // Trees Collection
+    // --------------------------------------------------------------------------
+
+    /**
+     * @description Manages access to tree documents.
+     * @path /trees/{treeId}
+     * @allow (read) Public access to tree documents for transparency.
+     * @allow (create) Signed-in user who is a CFA member or validator can create a tree document.
+     * @allow (update) Validator or the user who planted the tree can update the document.
+     * @allow (delete) Admin can delete any tree document.
+     * @deny (create) Signed-in user who is not a CFA member or validator cannot create a tree document.
+     * @deny (update) User who is not a validator or the planter cannot update a tree document.
+     * @deny (delete) User who is not an admin cannot delete a tree document.
+     * @principle Allows public read access but restricts write access to authorized users.
+     */
+    match /trees/{treeId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if isSignedIn() && (isCFAMember(request.resource.data.cfaId) || isValidator());
+      allow update: if isValidator() || (isSignedIn() && request.auth.uid == resource.data.plantedBy);
+      allow delete: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------------
+    // Verifications Collection
+    // --------------------------------------------------------------------------
+
+    /**
+     * @description Manages access to verification documents.
+     * @path /verifications/{verificationId}
+     * @allow (read) Signed-in user can read any verification document.
+     * @allow (create) Validator with sufficient reputation (70) can create a verification document.
+     * @allow (update) Validator or admin can update a verification document.
+     * @allow (delete) Admin can delete any verification document.
+     * @deny (read) Anonymous user cannot read verification documents.
+     * @deny (create) Validator without sufficient reputation cannot create a verification document.
+     * @deny (update) User who is not a validator or admin cannot update a verification document.
+     * @deny (delete) User who is not an admin cannot delete a verification document.
+     * @principle Restricts verification creation based on reputation and modifies to validators or admins.
+     */
+    match /verifications/{verificationId} {
+      allow get: if isSignedIn();
+      allow list: if false; // Explicitly disallow listing
+      allow create: if isValidator() && hasReputation(70);
+      allow update: if isValidator() || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------------
+    // Rewards Collection
+    // --------------------------------------------------------------------------
+
+    /**
+     * @description Manages access to reward documents.
+     * @path /rewards/{rewardId}
+     * @allow (read) Signed-in user can read their own reward documents or if admin.
+     * @allow (create) Only the system can create reward documents (deny all other creates).
+     * @allow (update) No updates allowed.
+     * @allow (delete) Admin can delete any reward document.
+     * @deny (read) User cannot read other users' reward documents (unless admin).
+     * @deny (create) Non-system users cannot create reward documents.
+     * @deny (update) All updates are denied.
+     * @deny (delete) Non-admin users cannot delete reward documents.
+     * @principle Only system can create rewards, users can read their own rewards and admins can manage.
+     */
+    match /rewards/{rewardId} {
+      allow get: if isSignedIn() && (request.auth.uid == resource.data.userId || isAdmin());
+      allow list: if false; // Explicitly disallow listing
+      allow create: if false;
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------------
+    // Staking Pools Collection
+    // --------------------------------------------------------------------------
+
+    /**
+     * @description Manages access to staking pool documents.
+     * @path /stakingPools/{poolId}
+     * @allow (read) Signed-in user can read any staking pool document.
+     * @allow (create) Admin can create staking pool documents.
+     * @allow (update) Admin can update any staking pool document or if user is a participant.
+     * @allow (delete) Admin can delete any staking pool document.
+     * @deny (read) Anonymous user cannot read staking pool documents.
+     * @deny (create) Non-admin user cannot create staking pool documents.
+     * @deny (update) Non-admin user cannot update staking pool documents (unless a participant).
+     * @deny (delete) Non-admin user cannot delete staking pool documents.
+     * @principle Restricts staking pool creation and deletion to admins, and updates to participants or admins.
+     */
+    match /stakingPools/{poolId} {
+      allow get: if isSignedIn();
+      allow list: if false; // Explicitly disallow listing
+      allow create: if isAdmin();
+      allow update: if isAdmin() || (isSignedIn() && request.auth.uid in resource.data.participants);
+      allow delete: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------------
+    // Projects Collection
+    // --------------------------------------------------------------------------
+
+    /**
+     * @description Manages access to project documents.
+     * @path /projects/{projectId}
+     * @allow (read) Public access to project documents for transparency.
+     * @allow (create) Signed-in user with sufficient reputation (80) can create a project document.
+     * @allow (update) CFA member or admin can update a project document.
+     * @allow (delete) Admin can delete any project document.
+     * @deny (create) Signed-in user without sufficient reputation cannot create a project document.
+     * @deny (update) User who is not a CFA member or admin cannot update a project document.
+     * @deny (delete) User who is not an admin cannot delete a project document.
+     * @principle Allows public read access but restricts write access to authorized users and admins.
+     */
+    match /projects/{projectId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if isSignedIn() && hasReputation(80);
+      allow update: if isCFAMember(resource.data.cfaId) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------------
+    // NFTs Collection
+    // --------------------------------------------------------------------------
+
+    /**
+     * @description Manages access to NFT documents.
+     * @path /nfts/{nftId}
+     * @allow (read) Public access to NFT documents (e.g., for a marketplace).
+     * @allow (create) Signed-in user who minted the NFT or admin can create the NFT document.
+     * @allow (update) User who owns the NFT or admin can update the NFT document.
+     * @allow (delete) Admin can delete any NFT document.
+     * @deny (create) Signed-in user who did not mint the NFT cannot create the NFT document.
+     * @deny (update) User who does not own the NFT cannot update the NFT document.
+     * @deny (delete) User who is not an admin cannot delete an NFT document.
+     * @principle Allows public read access, but restricts modifications to the owner or admins.
+     */
+    match /nfts/{nftId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if isSignedIn() && (request.resource.data.mintedBy == request.auth.uid || isAdmin());
+      allow update: if isSignedIn() && (request.auth.uid == resource.data.ownedBy) || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------------
+    // Donations Collection
+    // --------------------------------------------------------------------------
+
+    /**
+     * @description Manages access to donation documents.
+     * @path /donations/{donationId}
+     * @allow (read) Signed-in donor can read their own donation document, or if the donation is not anonymous, or if the user is an admin.
+     * @allow (create) Signed-in user can create a donation document.
+     * @allow (update) Updates are not allowed.
+     * @allow (delete) Admin can delete any donation document.
+     * @deny (read) User cannot read other users' anonymous donation documents.
+     * @deny (update) All updates are denied.
+     * @deny (delete) User who is not an admin cannot delete a donation document.
+     * @principle Restricts read access to donors and admins, and prevents updates.
+     */
+    match /donations/{donationId} {
+      allow get: if isSignedIn() && (request.auth.uid == resource.data.donorId || resource.data.anonymous == false || isAdmin());
+      allow list: if false; // Explicitly disallow listing
+      allow create: if isSignedIn();
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------------
+    // Governance Collection
+    // --------------------------------------------------------------------------
+
+    /**
+     * @description Manages access to governance proposal documents.
+     * @path /governance/{proposalId}
+     * @allow (read) Signed-in user can read any governance proposal document.
+     * @allow (create) Signed-in user with sufficient reputation (80) can create a governance proposal document.
+     * @allow (update) Signed-in user can update a governance proposal if it's active and they haven't voted.
+     * @allow (delete) Admin can delete any governance proposal document.
+     * @deny (read) Anonymous user cannot read governance proposal documents.
+     * @deny (create) Signed-in user without sufficient reputation cannot create a governance proposal document.
+     * @deny (update) User cannot update a governance proposal if it's not active or they have voted.
+     * @deny (delete) User who is not an admin cannot delete a governance proposal document.
+     * @principle Restricts proposal creation based on reputation and proposal updates based on status and voting.
+     */
+    match /governance/{proposalId} {
+      allow get: if isSignedIn();
+      allow list: if false; // Explicitly disallow listing
+      allow create: if isSignedIn() && hasReputation(80);
+      allow update: if isSignedIn() && (resource.data.status == 'active' && !(request.auth.uid in resource.data.votes));
+      allow delete: if isAdmin();
+    }
+
+    // --------------------------------------------------------------------------
+    // Analytics Collection
+    // --------------------------------------------------------------------------
+
+    /**
+     * @description Manages access to analytics documents.
+     * @path /analytics/{analyticsId}
+     * @allow (read) Public access to analytics documents for dashboard purposes.
+     * @allow (write) Writes are denied, implying system-only write access.
+     * @deny (write) No direct writes are allowed from users or clients.
+     * @principle Public read, system-only write access for analytics data.
+     */
+    match /analytics/{analyticsId} {
+      allow get: if true;
+      allow list: if true;
+      allow create: if false;
+      allow update: if false;
+      allow delete: if false;
+    }
+
+    // --------------------------------------------------------------------------
+    // Notifications Collection (User Subcollection)
+    // --------------------------------------------------------------------------
+
+    /**
+     * @description Manages access to user-specific notification documents.
+     * @path /users/{userId}/notifications/{notificationId}
+     * @allow (read) Signed-in user can read their own notification documents.
+     * @allow (create) Only the system can create notification documents (deny all other creates).
+     * @allow (update) Signed-in user can update their own notification documents (e.g., mark as read).
+     * @allow (delete) Signed-in user can delete their own notification documents, or admin can delete any.
+     * @deny (read) User cannot read other users' notification documents.
+     * @deny (create) Non-system users cannot create notification documents.
+     * @deny (update) User cannot update other users' notification documents.
+     * @deny (delete) User cannot delete other users' notification documents (unless admin).
+     * @principle Enforces user-ownership for notifications and admin override.
+     */
+    match /users/{userId}/notifications/{notificationId} {
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if false;
+      allow update: if isOwner(userId);
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+
+    // --------------------------------------------------------------------------
+    // System Configuration Collection (Singleton)
+    // --------------------------------------------------------------------------
+
+    /**
+     * @description Manages access to the system configuration document.
+     * @path /systemConfig/singleton
+     * @allow (read) Signed-in user can read the system configuration.
+     * @allow (write) Only admin can write to the system configuration.
+     * @deny (write) Non-admin users cannot modify system configuration.
+     * @principle Restricts system configuration modifications to administrators.
+     */
+    match /systemConfig/{configId} {
+      allow get: if isSignedIn();
+      allow list: if false; // This is a singleton, so listing is not applicable.
+      allow create: if false; // Prevent creation of new system configs
+      allow update: if isAdmin();
+      allow delete: if false; // Prevent deletion of the system config
+    }
+  }
+}

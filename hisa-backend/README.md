@@ -1,8 +1,15 @@
-# 🌍 HISA People Chain Backend 
+# HISA People Chain
+### Kenya's Transparent AI Energy Trust Layer
 
-HISA (Heritage, Innovation, Sustainability, and Action) is an interoperating ecosystem combining regenerative agriculture, cultural heritage preservation, and decentralized finance. 
+> Hedera-based infrastructure that verifies energy assets, amplifies
+> community voice, governs cooperatives democratically, and advocates
+> for energy's role as the physical substrate of AI — routing value
+> back to the CFAs and CBOs who power Kenya's renewable future.
+
+**EPRA Hackathon 2025 | Challenge: Infrastructure Gaps & Energy Access**
 
 This repository contains the backend architecture, autonomous AI agents, and Smart Contracts powering the HISA ecosystem, built entirely on the **Hedera network**.
+
 
 ---
 
@@ -12,10 +19,10 @@ This project heavily leverages the Hedera ecosystem to guarantee trust, speed, a
 
 ### 1. Hedera Token Service (HTS)
 We utilize HTS for our four native tokens:
-*   **$JANI**: Fungible reward tokens and unique NFTs tracking verified tree plantings (`src/hedera/token.service.js`).
-*   **$CHAT**: NFTs representing verified cultural heritage assets and FPIC consent tracking.
-*   **$UMOS**: Utility token for SME equity tokenization and liquidity staking.
-*   **$HISA**: Ecosystem rewards tied to Wellness and cross-SDG impact.
+*   **$JANI**: Energy asset verification credential (`src/hedera/token.service.js`).
+*   **$CHAT**: Community grievance & outage reporting credential.
+*   **$UMOJA**: Energy cooperative governance vote token.
+*   **$HISA**: AI intelligence layer + carbon credit value token.
 
 ### 2. Hedera Consensus Service (HCS)
 Every critical action in the ecosystem acts as an immutable audit trail using HCS topics (`src/hedera/consensus.service.js`):
@@ -87,4 +94,4 @@ npm test
 *   **UMOJA (DeFi)**: Fractionalize SME and land assets. Stake $UMOS for yield. Access credit.
 *   **HISA (Wellness)**: Mental health check-ins trigger cross-module SDG rewards via the ADK.
 
-> Built for the **APEX Hackathon 2026** by team HISA People Chain.
+> Built for the **EPRA Hackathon 2025** by team HISA People Chain.

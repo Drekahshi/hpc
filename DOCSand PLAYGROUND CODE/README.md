@@ -1,20 +1,26 @@
 
 
 
-# 🌍 HISA PEOPLES CHAIN  
-## *A Holistic Vision for Africa's Digital Transformation*
+# HISA People Chain
+### Kenya's Transparent AI Energy Trust Layer
+
+![Hedera](https://img.shields.io/badge/Hedera-Hashgraph-00A896)
+![EPRA](https://img.shields.io/badge/EPRA-Hackathon%202025-1B4F72)
+![ESG](https://img.shields.io/badge/ESG-SDG%207%2C10%2C13%2C16-F4A261)
+![Network](https://img.shields.io/badge/Network-Testnet-brightgreen)
+![License](https://img.shields.io/badge/License-MIT-blue)
+
+> Hedera-based infrastructure that verifies energy assets, amplifies
+> community voice, governs cooperatives democratically, and advocates
+> for energy's role as the physical substrate of AI — routing value
+> back to the CFAs and CBOs who power Kenya's renewable future.
+
+**EPRA Hackathon 2025 | Challenge: Infrastructure Gaps & Energy Access**
 
 ---
 
-## 🌐 The Big Picture: *Ubuntu Meets Distributed Ledger Technology*
+## 🌐 The Big Picture: *Energy as the physical substrate of AI*
 
-> HISA PEOPLES CHAIN is a **grassroots movement** powered by  Hedera distributed Ledger a  robust digital  framework  that will be used  to connecting everyday Africans, **agentic AI** to address the 17 SDGs through **action, ownership, and reward with focus on sustainability finance  and ecotourism for prosperity for all**. It entails
-
-- 🌳 *conservation database*
-- 🧠 *Telemedicine and economic inclusion and empowerment*
-- 🪢 *Cultural database*
-
-This isn't just crypto. **It's a people-powered digital economy** that works on **any device**, even basic feature phones.
 
 > **"HISA" means  Ownership**  in swahili
 > Giving Africans control over their data, culture, and financial future. We are solving real problems that people suffer through, achieving alleviation and elevation for all through Web3 onboarding, thanks to Hedera's accessible, enterprise-grade distributed technologies.
@@ -90,11 +96,15 @@ HISA positions itself as a **continental blueprint**, bridging finance and susta
 > [!IMPORTANT]  
 > Diversified token economy = long-term stability & reward pathways
 
-### 🔹 Token Suite:
-- **$HISA** – Base token with anti-inflation design  
-- **JANI** – For environmental work  
-- **UMOJA** – Tokenized securities  
-- **CULTURE** – Traditional knowledge token
+## Pre-Deployed Testnet Tokens
+
+| Token | Symbol | Energy Role | Status |
+|-------|--------|-------------|--------|
+| JANI  | JANI   | Energy asset verification credential | ✅ Testnet live |
+| CHAT  | CHAT   | Community grievance & outage reporting | ✅ Testnet live |
+| UMOJA | UMOJA  | Energy cooperative governance vote | ✅ Testnet live |
+| HISA  | HISA   | AI intelligence + carbon credit value | ✅ Testnet live |
+
 
 ### 🛡️ Stability Features:
 - Overcollateralized stablecoins  
@@ -461,7 +471,20 @@ Access at http://localhost:5000.
 - **AI/Verification fails?** Check internet; ensure API keys in `.env` for agentic AI services.
 - **Other problems?** Check console logs. Open an [issue]() with details.
 
+## EPRA Hackathon Submission
+
+| Section | Content |
+|---------|---------|
+| Challenge | Infrastructure Gaps & Energy Access |
+| Problem Statement | Kenya's energy opacity crisis + AI equity gap |
+| Proposed Approach | 4-pillar Hedera trust layer |
+| Innovation | First agentic AI energy trust layer in Kenya |
+| Primary Beneficiary | EPRA & policy makers needing open data |
+| SDGs | 7, 10, 13, 16, 17 |
+| Live Demo | Hedera Testnet — all 4 tokens deployed |
+
 ## Contributing
+
 
 Fork the repo, create a branch, and submit a PR. For Hedera or AI changes, discuss in an issue first.
 

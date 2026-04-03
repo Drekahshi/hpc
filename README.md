@@ -5,7 +5,7 @@
 > governs cooperatives democratically, and advocates for energy's role as the physical
 > substrate of AI — routing value back to the CFAs and CBOs who power Kenya's renewable future.
 
-**EPRA Hackathon 2025 | Challenge: Infrastructure Gaps & Energy Access**
+**EPRA Hackathon 2026 | Challenge: Infrastructure Gaps & Energy Access**
 
 ![Hedera](https://img.shields.io/badge/Hedera-Hashgraph-00A896?style=flat-square)
 ![EPRA](https://img.shields.io/badge/EPRA-Hackathon%202025-1B4F72?style=flat-square)
@@ -352,7 +352,7 @@ HISA builds the trust layer that makes them sovereign participants.
 
 ## License
 
-MIT © 2025 HISA People Chain
+MIT © 2026 HISA People Chain
 
 ---
 
